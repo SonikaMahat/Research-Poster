@@ -1,0 +1,111 @@
+---
+title: Are Capital Cities More Prone to Violent Riots?
+author:
+  - name: Sonika Mahat
+    email: sm6358a@american.edu
+    main: true
+affiliation:
+address: Data Analysis (SIS 750), American University
+main_findings:
+  - "Make **better posters** with RMarkdown + **posterdown**."
+  - '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main_pic}'
+logoleft_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/qr-code-black.png){.main-img-left}'
+logoright_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main-img-right}'
+output: 
+  posterdown::posterdown_betterland:
+    self_contained: false
+    pandoc_args: --mathjax
+    highlight: haddock
+    number_sections: false
+link-citations: true
+bibliography: packages.bib
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(results = 'asis',
+                      echo = FALSE,
+                      warning = FALSE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      fig.align = 'center',
+                      out.width = "100%")
+options(knitr.table.format = "html") 
+```
+
+```{r myplot, include=FALSE}
+svg('myplot.svg')
+plot(iris$Sepal.Length, iris$Sepal.Width)
+dev.off()
+```
+
+# Introduction  
+
+Cities are becoming the main stage for political unrest, and capital cities often take center stage. They hold government offices, political elites, and attract more media attention; all of which can make them hotspots for social disorder. One of the most intense forms of unrest is organized violent riots, where violence is used in a coordinated way by political or identity groups.
+
+This poster asks: Are capital cities more prone to violent riots than other cities? To explore this, I use the Urban Social Disorder (USD 3.0) dataset, which covers over 180 cities around the world from 1960 to 2014 (Bahgat et al., 2022). The dataset provides detailed information about the type, scale, and timing of unrest events.
+
+The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.
+
+```{r, include=FALSE}
+knitr::write_bib(c('posterdown', 'rmarkdown','pagedown'), 'packages.bib')
+```
+
+## Objectives
+
+The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.
+
+# Methods
+
+I will show here how to include poster elements that may be useful, such as an equation using mathjax:
+
+$$
+E = mc^2
+$$
+
+To reference a citation you can add your `.bib` file to the working directory and name it in the YAML metadata or generate an automated one as done here, then you only need to reference the label value in the `.bib` file. For example this package is built on top of the wonderful {pagedown} package and I will cite it at the end of this sentance using this in the rmd `[@R-pagedown]` [@R-pagedown].
+
+To get a better understanding of how to include features like these please refer to the {posterdown} [wiki](https://github.com/posterdown/wiki).
+
+**_Now on to the results!_**
+
+<br>
+
+# Results
+
+Here you may have some figures to show off, bellow I have made a scatterplot with the infamous Iris dataset and I can even reference to the figure automatically like this, `Figure \@ref(fig:irisfigure)`, Figure \@ref(fig:irisfigure).
+
+```{r, irisfigure, fig.cap='Here is a caption for the figure. This can be added by using the "fig.cap" option in the r code chunk options, see this [link](https://yihui.name/knitr/options/#plots) from the legend himself, [Yihui Xie](https://twitter.com/xieyihui).', out.width="80%"}
+par(mar=c(2,2,0,1))
+plot(x = iris$Sepal.Length, y = iris$Sepal.Width,
+     col = iris$Species, pch = 19, xlab = "Sepal Length",
+     ylab = "Sepal Width")
+```
+
+Maybe you want to show off some of that fancy code you spent so much time on to make that figure, well you can do that too! Just use the `echo=TRUE` option in the r code chunk options, Figure \@ref(fig:myprettycode)!
+
+```{r myprettycode, echo=FALSE,collapse=TRUE, fig.cap='Boxplots, so hot right now!', fig.height=3.5, out.width="80%"}
+#trim whitespace
+par(mar=c(2,2,0,0))
+#plot boxplots
+boxplot(iris$Sepal.Width~iris$Species,
+        col = "#008080", 
+        border = "#0b4545",
+        ylab = "Sepal Width (cm)",
+        xlab = "Species")
+```
+
+How about a neat table of data? See, Table \@ref(tab:iristable):
+
+```{r, iristable}
+knitr::kable(
+  iris[1:8,1:5], format = "html",
+  caption = "A table made with the **knitr::kable** function.",
+  align = "c", col.names = c("Sepal <br> Length",
+                             "Sepal <br> Width",
+                             "Petal <br> Length",
+                             "Petal <br> Width",
+                             "Species"),
+  escape = FALSE)
+```
+
+# References
