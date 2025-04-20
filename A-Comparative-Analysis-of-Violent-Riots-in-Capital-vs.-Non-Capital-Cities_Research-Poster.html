@@ -302,241 +302,52 @@ Sonika Mahat<sup> </sup><br>
 </h5>
 
 <p id="affiliation" class="affiliation">
-<sup></sup> 
+
 </p>
 
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Cities are becoming the main stage for political unrest, and capital cities often take center stage. They hold government offices, political elites, and attract more media attention; all of which can make them hotspots for social disorder. One of the most intense forms of unrest is organized violent riots, where violence is used in a coordinated way by political or identity groups.</p>
-<p>This poster asks: Are capital cities more prone to violent riots than other cities? To explore this, I use the Urban Social Disorder (USD 3.0) dataset, which covers over 180 cities around the world from 1960 to 2014 (Bahgat et al., 2022). The dataset provides detailed information about the type, scale, and timing of unrest events.</p>
-<p>The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.</p>
-<div id="objectives" class="section level2">
-<h2>Objectives</h2>
-<p>The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.</p>
+<p>Urban unrest is growing around the world, and capital cities are often at the center of it. Since they hold political power and national institutions, they can be more likely to face conflict. One serious form of unrest is organized violent riots, where violence is used in a planned way by political or identity groups.</p>
+<p>This poster looks at two things: Are capital cities more likely to face violent riots than other cities? And who are the main actors involved in these riots? By comparing cities across the world, this research helps us understand how a city’s political role shapes both where and who is involved in urban violence.</p>
 </div>
+<div id="objectives" class="section level1">
+<h1>Objectives</h1>
+<p>This research looks at whether capital cities are more likely to face organized violent riots than non-capitals. Using global city-level data, it explores patterns between political power and urban unrest.</p>
+<p>The goal is to better understand how cities can prepare for conflict and make smarter policy decisions around urban safety.</p>
 </div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
-<p>I will show here how to include poster elements that may be useful, such as an equation using mathjax:</p>
-<p><span class="math display">\[
-E = mc^2
-\]</span></p>
-<p>To reference a citation you can add your <code>.bib</code> file to the working directory and name it in the YAML metadata or generate an automated one as done here, then you only need to reference the label value in the <code>.bib</code> file. For example this package is built on top of the wonderful {pagedown} package and I will cite it at the end of this sentance using this in the rmd <code>[@R-pagedown]</code> <span class="citation">(<a href="#ref-R-pagedown">Xie et al. 2025</a>)</span>.</p>
-<p>To get a better understanding of how to include features like these please refer to the {posterdown} <a href="https://github.com/posterdown/wiki">wiki</a>.</p>
-<p><strong><em>Now on to the results!</em></strong></p>
-<p><br></p>
+<div id="data-and-methods" class="section level1">
+<h1>Data and Methods</h1>
+<p>This study uses the Urban Social Disorder (USD) 3.0 dataset, which tracks events of political unrest in over 180 cities from 1960 to 2014 (Bahgat et al., 2022). Each event includes details like the type of unrest, the city it happened in, and whether the city is a capital.</p>
+<p>I focus on events labeled as organized violent riots (PTYPE = 50), which are planned violent actions by political or identity groups. Using the CAPITAL variable, I compare how often these riots happen in capital cities versus non-capitals.</p>
+<p>To see if the difference is meaningful, I use a chi-squared test. I also look at who the main actors are in these riots, especially in capital cities.</p>
 </div>
-<div id="results" class="section level1">
-<h1>Results</h1>
-<p>Here you may have some figures to show off, bellow I have made a scatterplot with the infamous Iris dataset and I can even reference to the figure automatically like this, <code>Figure \@ref(fig:irisfigure)</code>, Figure <a href="#fig:irisfigure">1</a>.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:irisfigure"></span>
-&lt;img src=“A-Comparative-Analysis-of-Violent-Riots-in-Capital-vs.-Non-Capital-Cities_Research-Poster_files/figure-html/irisfigure-1.png” alt=“Here is a caption for the figure. This can be added by using the”fig.cap” option in the r code chunk options, see this <a href="https://yihui.name/knitr/options/#plots">link</a> from the legend himself, <a href="https://twitter.com/xieyihui">Yihui Xie</a>.” width=“80%” /&gt;
-<p class="caption">
-Figure 1: Here is a caption for the figure. This can be added by using the “fig.cap” option in the r code chunk options, see this <a href="https://yihui.name/knitr/options/#plots">link</a> from the legend himself, <a href="https://twitter.com/xieyihui">Yihui Xie</a>.
-</p>
+<div id="analysis-and-result" class="section level1">
+<h1>Analysis and Result</h1>
+<p>The bar chart on the left compares the number of organized violent riots in capital and non-capital cities. Although capital cities show a much higher number of riot events, the chi-squared test result (p = 0.63) suggests that this difference is not statistically significant. This means that, based on this dataset, we cannot say that capital cities are more likely to face such riots purely because they are capitals.</p>
+<p>On the right, the chart shows the main actors involved in organized violent riots in capital cities. The most common actors are security forces, demonstrators, and students, followed by protesters. This highlights that both state and non-state groups play key roles in these urban conflicts.</p>
+<pre><code>Pearson&#39;s Chi-squared test with Yates&#39; continuity correction</code></pre>
+<p>data: table_data
+X-squared = 0.23028, df = 1, p-value = 0.6313</p>
+<p><img src="A-Comparative-Analysis-of-Violent-Riots-in-Capital-vs.-Non-Capital-Cities_Research-Poster_files/figure-html/results-analysis-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<p>Maybe you want to show off some of that fancy code you spent so much time on to make that figure, well you can do that too! Just use the <code>echo=TRUE</code> option in the r code chunk options, Figure <a href="#fig:myprettycode">2</a>!</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:myprettycode"></span>
-<img src="A-Comparative-Analysis-of-Violent-Riots-in-Capital-vs.-Non-Capital-Cities_Research-Poster_files/figure-html/myprettycode-1.png" alt="Boxplots, so hot right now!" width="80%" />
-<p class="caption">
-Figure 2: Boxplots, so hot right now!
-</p>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>In conclusion, the analysis shows that while capital cities report more organized violent riots, the difference with non-capitals is not statistically significant. The main actors in these riots are security forces, demonstrators, students, and protesters, pointing to recurring tensions between the state and civic groups in capital cities.</p>
 </div>
-<p>How about a neat table of data? See, Table <a href="#tab:iristable">1</a>:</p>
-<table>
-<caption>
-<span id="tab:iristable">Table 1: </span>A table made with the <strong>knitr::kable</strong> function.
-</caption>
-<thead>
-<tr>
-<th style="text-align:center;">
-Sepal <br> Length
-</th>
-<th style="text-align:center;">
-Sepal <br> Width
-</th>
-<th style="text-align:center;">
-Petal <br> Length
-</th>
-<th style="text-align:center;">
-Petal <br> Width
-</th>
-<th style="text-align:center;">
-Species
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center;">
-5.1
-</td>
-<td style="text-align:center;">
-3.5
-</td>
-<td style="text-align:center;">
-1.4
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-4.9
-</td>
-<td style="text-align:center;">
-3.0
-</td>
-<td style="text-align:center;">
-1.4
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-4.7
-</td>
-<td style="text-align:center;">
-3.2
-</td>
-<td style="text-align:center;">
-1.3
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-4.6
-</td>
-<td style="text-align:center;">
-3.1
-</td>
-<td style="text-align:center;">
-1.5
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-5.0
-</td>
-<td style="text-align:center;">
-3.6
-</td>
-<td style="text-align:center;">
-1.4
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-5.4
-</td>
-<td style="text-align:center;">
-3.9
-</td>
-<td style="text-align:center;">
-1.7
-</td>
-<td style="text-align:center;">
-0.4
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-4.6
-</td>
-<td style="text-align:center;">
-3.4
-</td>
-<td style="text-align:center;">
-1.4
-</td>
-<td style="text-align:center;">
-0.3
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-5.0
-</td>
-<td style="text-align:center;">
-3.4
-</td>
-<td style="text-align:center;">
-1.5
-</td>
-<td style="text-align:center;">
-0.2
-</td>
-<td style="text-align:center;">
-setosa
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="references" class="section level1 unnumbered">
+<div id="references" class="section level1">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-R-pagedown" class="csl-entry">
-Xie, Yihui, Romain Lesur, Brent Thorne, and Xianying Tan. 2025. <em>Pagedown: Paginate the HTML Output of r Markdown with CSS for Print</em>. <a href="https://github.com/rstudio/pagedown">https://github.com/rstudio/pagedown</a>.
-</div>
-</div>
+<p>Thomson, Henry, Karim Bahgat, Henrik Urdal &amp; Halvard Buhaug 2022. “Urban Social Disorder 3.0: A global, city-level event dataset of political mobilization and disorder.” Journal of Peace Research, forthcoming</p>
 </div>
 
 </div>
 <div class="main">
-<p>Make <strong>better posters</strong> with RMarkdown + <strong>posterdown</strong>.<br><br> <img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png" class="main_pic" /></p>
-<img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/qr-code-black.png" class="main-img-left" />
-<img src="https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png" class="main-img-right" />
+<p>Capital cities report more violent riots, but the difference is not statistically significant.<br><br> Security forces, demonstrators, students, and protesters are the main actors in capital riots.</p>
+
+
 </div>
 </div>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-var script = document.createElement("script");
-script.type = "text/javascript";
-var src = "true";
-if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-if (location.protocol !== "file:" && /^https?:/.test(src))
-src = src.replace(/^https?:/, '');
-script.src = src;
-document.getElementsByTagName("head")[0].appendChild(script);
-})();
-</script>
 
 
 </body>

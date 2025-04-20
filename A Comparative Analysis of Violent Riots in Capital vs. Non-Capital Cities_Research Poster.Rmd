@@ -4,13 +4,10 @@ author:
   - name: Sonika Mahat
     email: sm6358a@american.edu
     main: true
-affiliation:
 address: Data Analysis (SIS 750), American University
 main_findings:
-  - "Make **better posters** with RMarkdown + **posterdown**."
-  - '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main_pic}'
-logoleft_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/qr-code-black.png){.main-img-left}'
-logoright_name: '![](https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png){.main-img-right}'
+-  Capital cities report more violent riots, but the difference is not statistically significant.
+-  Security forces, demonstrators, students, and protesters are the main actors in capital riots.
 output: 
   posterdown::posterdown_betterland:
     self_contained: false
@@ -28,84 +25,147 @@ knitr::opts_chunk$set(results = 'asis',
                       tidy = FALSE,
                       message = FALSE,
                       fig.align = 'center',
-                      out.width = "100%")
+                      out.width = "50%")
 options(knitr.table.format = "html") 
-```
-
-```{r myplot, include=FALSE}
-svg('myplot.svg')
-plot(iris$Sepal.Length, iris$Sepal.Width)
-dev.off()
 ```
 
 # Introduction  
 
-Cities are becoming the main stage for political unrest, and capital cities often take center stage. They hold government offices, political elites, and attract more media attention; all of which can make them hotspots for social disorder. One of the most intense forms of unrest is organized violent riots, where violence is used in a coordinated way by political or identity groups.
+Urban unrest is growing around the world, and capital cities are often at the center of it. Since they hold political power and national institutions, they can be more likely to face conflict. One serious form of unrest is organized violent riots, where violence is used in a planned way by political or identity groups.
 
-This poster asks: Are capital cities more prone to violent riots than other cities? To explore this, I use the Urban Social Disorder (USD 3.0) dataset, which covers over 180 cities around the world from 1960 to 2014 (Bahgat et al., 2022). The dataset provides detailed information about the type, scale, and timing of unrest events.
+This poster looks at two things: Are capital cities more likely to face violent riots than other cities? And who are the main actors involved in these riots? By comparing cities across the world, this research helps us understand how a city’s political role shapes both where and who is involved in urban violence.
 
-The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.
+# Objectives
 
-```{r, include=FALSE}
-knitr::write_bib(c('posterdown', 'rmarkdown','pagedown'), 'packages.bib')
+This research looks at whether capital cities are more likely to face organized violent riots than non-capitals. Using global city-level data, it explores patterns between political power and urban unrest.
+
+The goal is to better understand how cities can prepare for conflict and make smarter policy decisions around urban safety.
+
+# Data and Methods
+
+This study uses the Urban Social Disorder (USD) 3.0 dataset, which tracks events of political unrest in over 180 cities from 1960 to 2014 (Bahgat et al., 2022). Each event includes details like the type of unrest, the city it happened in, and whether the city is a capital.
+
+I focus on events labeled as organized violent riots (PTYPE = 50), which are planned violent actions by political or identity groups. Using the CAPITAL variable, I compare how often these riots happen in capital cities versus non-capitals.
+
+To see if the difference is meaningful, I use a chi-squared test. I also look at who the main actors are in these riots, especially in capital cities.
+
+
+# Analysis and Result
+
+The bar chart on the left compares the number of organized violent riots in capital and non-capital cities. Although capital cities show a much higher number of riot events, the chi-squared test result (p = 0.63) suggests that this difference is not statistically significant. This means that, based on this dataset, we cannot say that capital cities are more likely to face such riots purely because they are capitals.
+
+On the right, the chart shows the main actors involved in organized violent riots in capital cities. The most common actors are security forces, demonstrators, and students, followed by protesters. This highlights that both state and non-state groups play key roles in these urban conflicts.
+
+```{r results-analysis, fig.width=10, fig.height=5,out.width="80%", echo=FALSE, message=FALSE, warning=FALSE}
+# Load required packages
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(forcats)
+library(stringr)
+library(patchwork)
+
+events <- read_excel("events.xlsx")
+cities <- read_excel("cities.xlsx")
+
+# Merge datasets using CITY_ID
+merged_data <- events %>%
+  left_join(select(cities, CITY_ID, CAPITAL), by = "CITY_ID")
+
+# Part 1: Capital vs Non-Capital Riot Counts ---------------------
+
+riot_data <- merged_data %>%
+  filter(PTYPE == 50)
+
+riot_counts <- riot_data %>%
+  count(CAPITAL, name = "Number_of_Riots")
+
+# Plot 1
+plot1 <- ggplot(riot_counts, aes(x = CAPITAL, y = Number_of_Riots, fill = CAPITAL)) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Organized Violent Riots by Capital Status",
+       x = "Capital City",
+       y = "Number of Riots") +
+  scale_fill_manual(values = c("Yes" = "#00088B", "No" = "#00BFFF")) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.y = element_text(size = 10),
+    axis.title = element_text(size = 10),
+    plot.title = element_text(face = "bold", size = 12)
+)
+
+# Chi-squared test: Are riots more likely in capital cities?
+# Create a contingency table: capital vs. riot event
+merged_data <- merged_data %>%
+  mutate(riot_event = ifelse(PTYPE == 50, "Riot", "Other"))
+
+table_data <- table(merged_data$CAPITAL, merged_data$riot_event)
+chi_result <- chisq.test(table_data)
+
+print(chi_result)
+# Part 2: Top Actors in Capital City Riots -----------------------
+
+capital_riots <- merged_data %>%
+  filter(PTYPE == 50, CAPITAL == "Yes")
+
+actor_clean <- capital_riots %>%
+  select(ACTOR1, ACTOR2, ACTOR3) %>%
+  pivot_longer(cols = everything(), names_to = "actor_type", values_to = "actor") %>%
+  filter(!is.na(actor), actor != "99") %>%
+  mutate(actor = str_to_title(actor),
+         actor = case_when(
+           str_detect(actor, "Student") ~ "Students",
+           str_detect(actor, "Demonstrator") ~ "Demonstrators",
+           str_detect(actor, "Protester") ~ "Protesters",
+           str_detect(actor, "Police|Security Force") ~ "Security Forces",
+           TRUE ~ actor
+         )) %>%
+  count(actor, sort = TRUE)
+
+# Define which actors to keep
+top_actor_names <- c("Students", "Demonstrators", "Security Forces", "Protesters")
+
+# Define custom colors
+custom_colors <- c(
+  "Students" = "#27408B",
+  "Demonstrators" = "#1874CD",
+  "Security Forces" = "#00BFFF",
+  "Protesters" = "#0000FF"
+)
+
+# Filter and reorder only top selected actors
+top_cleaned <- actor_clean %>%
+  filter(actor %in% top_actor_names) %>%
+  mutate(actor = fct_reorder(actor, n))
+
+# Plot
+plot2 <- ggplot(top_cleaned, aes(x = actor, y = n, fill = actor)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_manual(values = custom_colors) +
+  labs(
+    title = "Top Actors in Capital City Riots",
+    x = "Actor",
+    y = "Number of Events"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.y = element_text(size = 10),
+    axis.title = element_text(size = 10),
+    plot.title = element_text(face = "bold", size = 12)
+  )
+
+# Combine plots
+plot1 + plot2
 ```
 
-## Objectives
+# Conclusion
 
-The goal is to understand whether capital cities really experience more violent riots, and what that might mean for urban safety, governance, and development.
-
-# Methods
-
-I will show here how to include poster elements that may be useful, such as an equation using mathjax:
-
-$$
-E = mc^2
-$$
-
-To reference a citation you can add your `.bib` file to the working directory and name it in the YAML metadata or generate an automated one as done here, then you only need to reference the label value in the `.bib` file. For example this package is built on top of the wonderful {pagedown} package and I will cite it at the end of this sentance using this in the rmd `[@R-pagedown]` [@R-pagedown].
-
-To get a better understanding of how to include features like these please refer to the {posterdown} [wiki](https://github.com/posterdown/wiki).
-
-**_Now on to the results!_**
-
-<br>
-
-# Results
-
-Here you may have some figures to show off, bellow I have made a scatterplot with the infamous Iris dataset and I can even reference to the figure automatically like this, `Figure \@ref(fig:irisfigure)`, Figure \@ref(fig:irisfigure).
-
-```{r, irisfigure, fig.cap='Here is a caption for the figure. This can be added by using the "fig.cap" option in the r code chunk options, see this [link](https://yihui.name/knitr/options/#plots) from the legend himself, [Yihui Xie](https://twitter.com/xieyihui).', out.width="80%"}
-par(mar=c(2,2,0,1))
-plot(x = iris$Sepal.Length, y = iris$Sepal.Width,
-     col = iris$Species, pch = 19, xlab = "Sepal Length",
-     ylab = "Sepal Width")
-```
-
-Maybe you want to show off some of that fancy code you spent so much time on to make that figure, well you can do that too! Just use the `echo=TRUE` option in the r code chunk options, Figure \@ref(fig:myprettycode)!
-
-```{r myprettycode, echo=FALSE,collapse=TRUE, fig.cap='Boxplots, so hot right now!', fig.height=3.5, out.width="80%"}
-#trim whitespace
-par(mar=c(2,2,0,0))
-#plot boxplots
-boxplot(iris$Sepal.Width~iris$Species,
-        col = "#008080", 
-        border = "#0b4545",
-        ylab = "Sepal Width (cm)",
-        xlab = "Species")
-```
-
-How about a neat table of data? See, Table \@ref(tab:iristable):
-
-```{r, iristable}
-knitr::kable(
-  iris[1:8,1:5], format = "html",
-  caption = "A table made with the **knitr::kable** function.",
-  align = "c", col.names = c("Sepal <br> Length",
-                             "Sepal <br> Width",
-                             "Petal <br> Length",
-                             "Petal <br> Width",
-                             "Species"),
-  escape = FALSE)
-```
+In conclusion, the analysis shows that while capital cities report more organized violent riots, the difference with non-capitals is not statistically significant. The main actors in these riots are security forces, demonstrators, students, and protesters, pointing to recurring tensions between the state and civic groups in capital cities.
 
 # References
+
+Thomson, Henry, Karim Bahgat, Henrik Urdal & Halvard Buhaug 2022. "Urban Social Disorder 3.0: A global, city-level event dataset of political mobilization and disorder." Journal of Peace Research, forthcoming
